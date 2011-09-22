@@ -1,0 +1,908 @@
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.0ms)[0m  DROP DATABASE IF EXISTS `fat_free_crm_development`
+  [1m[36mSQL (0.0ms)[0m  [1mCREATE DATABASE `fat_free_crm_development` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (281.2ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `schema_migrations`
+  [1m[36mSQL (312.5ms)[0m  [1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (15.6ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations`
+Migrating to CreateSessions (20100928030598)
+  [1m[36mSQL (109.4ms)[0m  [1mCREATE TABLE `sessions` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `session_id` varchar(255) NOT NULL, `data` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `sessions`
+  [1m[36mSQL (296.9ms)[0m  [1mCREATE INDEX `index_sessions_on_session_id` ON `sessions` (`session_id`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `sessions`
+  [1m[36mSQL (203.1ms)[0m  [1mCREATE INDEX `index_sessions_on_updated_at` ON `sessions` (`updated_at`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (93.8ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030598')[0m
+Migrating to CreateUsers (20100928030599)
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (78.1ms)[0m  [1mCREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `uuid` varchar(36), `username` varchar(32) DEFAULT '' NOT NULL, `email` varchar(64) DEFAULT '' NOT NULL, `first_name` varchar(32), `last_name` varchar(32), `title` varchar(64), `company` varchar(64), `alt_email` varchar(64), `phone` varchar(32), `mobile` varchar(32), `aim` varchar(32), `yahoo` varchar(32), `google` varchar(32), `skype` varchar(32), `password_hash` varchar(255) DEFAULT '' NOT NULL, `password_salt` varchar(255) DEFAULT '' NOT NULL, `remember_token` varchar(255) DEFAULT '' NOT NULL, `perishable_token` varchar(255) DEFAULT '' NOT NULL, `openid_identifier` varchar(255), `last_request_at` datetime, `last_login_at` datetime, `current_login_at` datetime, `last_login_ip` varchar(255), `current_login_ip` varchar(255), `login_count` int(11) DEFAULT 0 NOT NULL, `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (171.9ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_username_and_deleted_at` ON `users` (`username`, `deleted_at`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (359.4ms)[0m  [1mCREATE INDEX `index_users_on_email` ON `users` (`email`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (187.5ms)[0m  [1mCREATE INDEX `index_users_on_last_request_at` ON `users` (`last_request_at`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (187.5ms)[0m  [1mCREATE INDEX `index_users_on_remember_token` ON `users` (`remember_token`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (187.5ms)[0m  [1mCREATE INDEX `index_users_on_perishable_token` ON `users` (`perishable_token`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (15.6ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030599')[0m
+Migrating to CreateOpenidTables (20100928030600)
+  [1m[35mSQL (15.6ms)[0m  SHOW TABLES
+  [1m[36mSQL (78.1ms)[0m  [1mCREATE TABLE `open_id_authentication_associations` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `issued` int(11), `lifetime` int(11), `handle` varchar(255), `assoc_type` varchar(255), `server_url` blob, `secret` blob) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (78.1ms)[0m  [1mCREATE TABLE `open_id_authentication_nonces` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `timestamp` int(11) NOT NULL, `server_url` varchar(255), `salt` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030600')[0m
+Migrating to CreateAccounts (20100928030601)
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (203.1ms)[0m  [1mCREATE TABLE `accounts` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `uuid` varchar(36), `user_id` int(11), `assigned_to` int(11), `name` varchar(64) DEFAULT '' NOT NULL, `access` varchar(8) DEFAULT 'Private', `website` varchar(64), `tall_free_phone` varchar(32), `phone` varchar(32), `fax` varchar(32), `billing_address` varchar(255), `shipping_address` varchar(255), `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `accounts`
+  [1m[36mSQL (187.5ms)[0m  [1mCREATE UNIQUE INDEX `index_accounts_on_user_id_and_name_and_deleted_at` ON `accounts` (`user_id`, `name`, `deleted_at`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `accounts`
+  [1m[36mSQL (156.2ms)[0m  [1mCREATE INDEX `index_accounts_on_assigned_to` ON `accounts` (`assigned_to`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030601')[0m
+Migrating to CreatePermissions (20100928030602)
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (78.1ms)[0m  [1mCREATE TABLE `permissions` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `asset_id` int(11), `asset_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `permissions`
+  [1m[36mSQL (140.6ms)[0m  [1mCREATE INDEX `index_permissions_on_user_id` ON `permissions` (`user_id`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030602')[0m
+Migrating to CreateSettings (20100928030603)
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (93.8ms)[0m  [1mCREATE TABLE `settings` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(32) DEFAULT '' NOT NULL, `value` text, `default_value` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `settings`
+  [1m[36mSQL (234.4ms)[0m  [1mCREATE INDEX `index_settings_on_name` ON `settings` (`name`)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030603')[0m
+Migrating to CreatePreferences (20100928030604)
+  [1m[35mSQL (78.1ms)[0m  CREATE TABLE `preferences` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(32) DEFAULT '' NOT NULL, `value` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `preferences`[0m
+  [1m[35mSQL (140.6ms)[0m  CREATE INDEX `index_preferences_on_user_id_and_name` ON `preferences` (`user_id`, `name`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030604')
+Migrating to CreateCampaigns (20100928030605)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (93.8ms)[0m  CREATE TABLE `campaigns` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `uuid` varchar(36), `user_id` int(11), `assigned_to` int(11), `name` varchar(64) DEFAULT '' NOT NULL, `access` varchar(8) DEFAULT 'Private', `status` varchar(64), `budget` decimal(12,2), `target_leads` int(11), `target_conversion` float, `target_revenue` decimal(12,2), `leads_count` int(11), `opportunities_count` int(11), `revenue` decimal(12,2), `starts_on` date, `ends_on` date, `objectives` text, `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `campaigns`[0m
+  [1m[35mSQL (187.5ms)[0m  CREATE UNIQUE INDEX `index_campaigns_on_user_id_and_name_and_deleted_at` ON `campaigns` (`user_id`, `name`, `deleted_at`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `campaigns`[0m
+  [1m[35mSQL (250.0ms)[0m  CREATE INDEX `index_campaigns_on_assigned_to` ON `campaigns` (`assigned_to`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (62.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030605')
+Migrating to CreateLeads (20100928030606)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (62.5ms)[0m  CREATE TABLE `leads` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `uuid` varchar(36), `user_id` int(11), `campaign_id` int(11), `assigned_to` int(11), `first_name` varchar(64) DEFAULT '' NOT NULL, `last_name` varchar(64) DEFAULT '' NOT NULL, `access` varchar(8) DEFAULT 'Private', `title` varchar(64), `company` varchar(64), `source` varchar(32), `status` varchar(32), `referred_by` varchar(64), `email` varchar(64), `alt_email` varchar(64), `phone` varchar(32), `mobile` varchar(32), `blog` varchar(128), `linkedin` varchar(128), `facebook` varchar(128), `twitter` varchar(128), `address` varchar(255), `rating` int(11) DEFAULT 0 NOT NULL, `do_not_call` tinyint(1) DEFAULT 0 NOT NULL, `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `leads`[0m
+  [1m[35mSQL (187.5ms)[0m  CREATE UNIQUE INDEX `index_leads_on_user_id_and_last_name_and_deleted_at` ON `leads` (`user_id`, `last_name`, `deleted_at`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `leads`[0m
+  [1m[35mSQL (156.2ms)[0m  CREATE INDEX `index_leads_on_assigned_to` ON `leads` (`assigned_to`)
+  [1m[36mSQL (15.6ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030606')
+Migrating to CreateContacts (20100928030607)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (78.1ms)[0m  CREATE TABLE `contacts` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `uuid` varchar(36), `user_id` int(11), `lead_id` int(11), `assigned_to` int(11), `reports_to` int(11), `first_name` varchar(64) DEFAULT '' NOT NULL, `last_name` varchar(64) DEFAULT '' NOT NULL, `access` varchar(8) DEFAULT 'Private', `title` varchar(64), `department` varchar(64), `source` varchar(32), `email` varchar(64), `alt_email` varchar(64), `phone` varchar(32), `mobile` varchar(32), `fax` varchar(32), `blog` varchar(128), `linkedin` varchar(128), `facebook` varchar(128), `twitter` varchar(128), `address` varchar(255), `born_on` date, `do_not_call` tinyint(1) DEFAULT 0 NOT NULL, `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `contacts`[0m
+  [1m[35mSQL (187.5ms)[0m  CREATE UNIQUE INDEX `id_last_name_deleted` ON `contacts` (`user_id`, `last_name`, `deleted_at`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `contacts`[0m
+  [1m[35mSQL (281.2ms)[0m  CREATE INDEX `index_contacts_on_assigned_to` ON `contacts` (`assigned_to`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (203.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030607')
+Migrating to CreateOpportunities (20100928030608)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (78.1ms)[0m  CREATE TABLE `opportunities` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `uuid` varchar(36), `user_id` int(11), `campaign_id` int(11), `assigned_to` int(11), `name` varchar(64) DEFAULT '' NOT NULL, `access` varchar(8) DEFAULT 'Private', `source` varchar(32), `stage` varchar(32), `probability` int(11), `amount` decimal(12,2), `discount` decimal(12,2), `closes_on` date, `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `opportunities`[0m
+  [1m[35mSQL (187.5ms)[0m  CREATE UNIQUE INDEX `id_name_deleted` ON `opportunities` (`user_id`, `name`, `deleted_at`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `opportunities`[0m
+  [1m[35mSQL (156.2ms)[0m  CREATE INDEX `index_opportunities_on_assigned_to` ON `opportunities` (`assigned_to`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030608')
+Migrating to CreateAccountContacts (20100928030609)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (171.9ms)[0m  CREATE TABLE `account_contacts` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `account_id` int(11), `contact_id` int(11), `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030609')
+Migrating to CreateAccountOpportunities (20100928030610)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (78.1ms)[0m  CREATE TABLE `account_opportunities` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `account_id` int(11), `opportunity_id` int(11), `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030610')
+Migrating to CreateContactOpportunities (20100928030611)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (78.1ms)[0m  CREATE TABLE `contact_opportunities` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `contact_id` int(11), `opportunity_id` int(11), `role` varchar(32), `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030611')
+Migrating to CreateTasks (20100928030612)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (62.5ms)[0m  CREATE TABLE `tasks` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `uuid` varchar(36), `user_id` int(11), `assigned_to` int(11), `completed_by` int(11), `name` varchar(255) DEFAULT '' NOT NULL, `asset_id` int(11), `asset_type` varchar(255), `priority` varchar(32), `category` varchar(32), `bucket` varchar(32), `due_at` datetime, `completed_at` datetime, `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `tasks`[0m
+  [1m[35mSQL (156.2ms)[0m  CREATE UNIQUE INDEX `index_tasks_on_user_id_and_name_and_deleted_at` ON `tasks` (`user_id`, `name`, `deleted_at`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `tasks`[0m
+  [1m[35mSQL (171.9ms)[0m  CREATE INDEX `index_tasks_on_assigned_to` ON `tasks` (`assigned_to`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030612')
+Migrating to CreateComments (20100928030613)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (109.4ms)[0m  CREATE TABLE `comments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `commentable_id` int(11), `commentable_type` varchar(255), `private` tinyint(1), `title` varchar(255) DEFAULT '', `comment` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030613')
+Migrating to CreateActivities (20100928030614)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (78.1ms)[0m  CREATE TABLE `activities` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `subject_id` int(11), `subject_type` varchar(255), `action` varchar(32) DEFAULT 'created', `info` varchar(255) DEFAULT '', `private` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `activities`[0m
+  [1m[35mSQL (187.5ms)[0m  CREATE INDEX `index_activities_on_user_id` ON `activities` (`user_id`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `activities`[0m
+  [1m[35mSQL (187.5ms)[0m  CREATE INDEX `index_activities_on_created_at` ON `activities` (`created_at`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030614')
+Migrating to CreateAvatars (20100928030615)
+  [1m[36mSQL (93.8ms)[0m  [1mCREATE TABLE `avatars` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `entity_id` int(11), `entity_type` varchar(255), `image_file_size` int(11), `image_file_name` varchar(255), `image_content_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030615')[0m
+Migrating to RenameRememberToken (20100928030616)
+  [1m[35mSQL (0.0ms)[0m  SHOW COLUMNS FROM `users` LIKE 'remember_token'
+  [1m[36mSQL (296.9ms)[0m  [1mALTER TABLE `users` CHANGE `remember_token` `persistence_token` varchar(255) DEFAULT '' NOT NULL[0m
+  [1m[35mSQL (171.9ms)[0m  ALTER TABLE `users` DROP `openid_identifier`
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030616')
+Migrating to DropOpenidTables (20100928030617)
+  [1m[36mSQL (46.9ms)[0m  [1mDROP TABLE `open_id_authentication_associations`[0m
+  [1m[35mSQL (46.9ms)[0m  DROP TABLE `open_id_authentication_nonces`
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030617')
+Migrating to AddAdminToUsers (20100928030618)
+  [1m[36mSQL (203.1ms)[0m  [1mALTER TABLE `users` ADD `admin` tinyint(1) DEFAULT 0 NOT NULL[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+Creating scope :except. Overwriting existing method User.except.
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030618')[0m
+Migrating to AddSuspendedToUsers (20100928030619)
+  [1m[35mSQL (171.9ms)[0m  ALTER TABLE `users` ADD `suspended_at` datetime
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW COLUMNS FROM `accounts` LIKE 'tall_free_phone'[0m
+  [1m[35mSQL (281.2ms)[0m  ALTER TABLE `accounts` CHANGE `tall_free_phone` `toll_free_phone` varchar(32) DEFAULT NULL
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (109.4ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030619')
+Migrating to RemoveUuid (20100928030620)
+  [1m[36mSQL (156.2ms)[0m  [1mALTER TABLE `users` DROP `uuid`[0m
+  [1m[35mSQL (156.2ms)[0m  ALTER TABLE `accounts` DROP `uuid`
+  [1m[36mSQL (156.2ms)[0m  [1mALTER TABLE `campaigns` DROP `uuid`[0m
+  [1m[35mSQL (140.6ms)[0m  ALTER TABLE `leads` DROP `uuid`
+  [1m[36mSQL (156.2ms)[0m  [1mALTER TABLE `contacts` DROP `uuid`[0m
+  [1m[35mSQL (218.8ms)[0m  ALTER TABLE `opportunities` DROP `uuid`
+  [1m[36mSQL (171.9ms)[0m  [1mALTER TABLE `tasks` DROP `uuid`[0m
+  [1m[35mSQL (15.6ms)[0m  SHOW TABLES
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100928030620')[0m
+Migrating to AddEmailToAccounts (20100928030621)
+  [1m[35mSQL (171.9ms)[0m  ALTER TABLE `accounts` ADD `email` varchar(64)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030621')
+Migrating to AddBackgroundInfoToModels (20100928030622)
+  [1m[36mSQL (203.1ms)[0m  [1mALTER TABLE `accounts` ADD `background_info` varchar(255)[0m
+  [1m[35mSQL (406.2ms)[0m  ALTER TABLE `campaigns` ADD `background_info` varchar(255)
+  [1m[36mSQL (156.2ms)[0m  [1mALTER TABLE `contacts` ADD `background_info` varchar(255)[0m
+  [1m[35mSQL (156.2ms)[0m  ALTER TABLE `leads` ADD `background_info` varchar(255)
+  [1m[36mSQL (171.9ms)[0m  [1mALTER TABLE `opportunities` ADD `background_info` varchar(255)[0m
+  [1m[35mSQL (187.5ms)[0m  ALTER TABLE `tasks` ADD `background_info` varchar(255)
+  [1m[36mSQL (15.6ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030622')
+Migrating to CreateAddresses (20100928030623)
+  [1m[36mSQL (109.4ms)[0m  [1mCREATE TABLE `addresses` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `street1` varchar(255), `street2` varchar(255), `city` varchar(64), `state` varchar(64), `zipcode` varchar(16), `country` varchar(64), `full_address` varchar(255), `address_type` varchar(16), `addressable_id` int(11), `addressable_type` varchar(255), `created_at` datetime, `updated_at` datetime, `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `addresses`
+  [1m[36mSQL (312.5ms)[0m  [1mCREATE INDEX `index_addresses_on_addressable_id_and_addressable_type` ON `addresses` (`addressable_id`, `addressable_type`)[0m
+  [1m[35mContact Load (0.0ms)[0m  SELECT `contacts`.* FROM `contacts` WHERE `contacts`.`deleted_at` IS NULL
+  [1m[36mAccount Load (0.0ms)[0m  [1mSELECT `accounts`.* FROM `accounts` WHERE `accounts`.`deleted_at` IS NULL[0m
+  [1m[35mLead Load (0.0ms)[0m  SELECT `leads`.* FROM `leads` WHERE `leads`.`deleted_at` IS NULL
+  [1m[36mSQL (312.5ms)[0m  [1mALTER TABLE `contacts` DROP `address`[0m
+  [1m[35mSQL (500.0ms)[0m  ALTER TABLE `accounts` DROP `billing_address`
+  [1m[36mSQL (296.9ms)[0m  [1mALTER TABLE `accounts` DROP `shipping_address`[0m
+  [1m[35mSQL (343.8ms)[0m  ALTER TABLE `leads` DROP `address`
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (93.8ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030623')
+Migrating to AddIndexOnPermissions (20100928030624)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `permissions`[0m
+  [1m[35mSQL (671.9ms)[0m  CREATE INDEX `index_permissions_on_asset_id_and_asset_type` ON `permissions` (`asset_id`, `asset_type`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (140.6ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030624')
+Migrating to CreateEmails (20100928030625)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (62.5ms)[0m  CREATE TABLE `emails` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `imap_message_id` varchar(255) NOT NULL, `user_id` int(11), `mediator_id` int(11), `mediator_type` varchar(255), `sent_from` varchar(255) NOT NULL, `sent_to` varchar(255) NOT NULL, `cc` varchar(255), `bcc` varchar(255), `subject` varchar(255), `body` text, `header` text, `sent_at` datetime, `received_at` datetime, `deleted_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `emails`[0m
+  [1m[35mSQL (328.1ms)[0m  CREATE INDEX `index_emails_on_mediator_id_and_mediator_type` ON `emails` (`mediator_id`, `mediator_type`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030625')
+Migrating to AddStateToTimelineObjects (20100928030626)
+  [1m[36mSQL (234.4ms)[0m  [1mALTER TABLE `comments` ADD `state` varchar(16) DEFAULT 'Expanded' NOT NULL[0m
+  [1m[35mSQL (171.9ms)[0m  ALTER TABLE `emails` ADD `state` varchar(16) DEFAULT 'Expanded' NOT NULL
+  [1m[36mSQL (15.6ms)[0m  [1mUPDATE comments SET state='Expanded'[0m
+  [1m[35mSQL (0.0ms)[0m  UPDATE emails SET state='Expanded'
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030626')
+Migrating to ActsAsTaggableOnMigration (20100928030627)
+  [1m[36mSQL (62.5ms)[0m  [1mCREATE TABLE `tags` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35mSQL (62.5ms)[0m  CREATE TABLE `taggings` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `tag_id` int(11), `taggable_id` int(11), `tagger_id` int(11), `tagger_type` varchar(255), `taggable_type` varchar(255), `context` varchar(255), `created_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `taggings`[0m
+  [1m[35mSQL (265.6ms)[0m  CREATE INDEX `index_taggings_on_tag_id` ON `taggings` (`tag_id`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW KEYS FROM `taggings`[0m
+  [1m[35mSQL (156.2ms)[0m  CREATE INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context` ON `taggings` (`taggable_id`, `taggable_type`, `context`)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100928030627')
+Migrating to AddExtraContactFields (20101209083035)
+  [1m[36mSQL (203.1ms)[0m  [1mALTER TABLE `contacts` ADD `chinese_name` varchar(255)[0m
+  [1m[35mSQL (171.9ms)[0m  ALTER TABLE `contacts` ADD `preferred_name` varchar(255)
+  [1m[36mSQL (171.9ms)[0m  [1mALTER TABLE `contacts` ADD `salutation` varchar(255)[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (93.8ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20101209083035')[0m
+Migrating to AddSingleAccessTokenToUsers (20101221123456)
+  [1m[35mSQL (203.1ms)[0m  ALTER TABLE `users` ADD `single_access_token` varchar(255)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20101221123456')
+Migrating to AddRatingAndCategoryToAccounts (20101221345678)
+  [1m[36mSQL (187.5ms)[0m  [1mALTER TABLE `accounts` ADD `rating` int(11) DEFAULT 0 NOT NULL[0m
+  [1m[35mSQL (171.9ms)[0m  ALTER TABLE `accounts` ADD `category` varchar(32)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20101221345678')
+Migrating to AddSkypeToContactsAndLeads (20110719082054)
+  [1m[36mSQL (187.5ms)[0m  [1mALTER TABLE `contacts` ADD `skype` varchar(128)[0m
+  [1m[35mSQL (250.0ms)[0m  ALTER TABLE `leads` ADD `skype` varchar(128)
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (15.6ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20110719082054')
+  [1m[36mSQL (15.6ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `account_contacts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `account_contacts`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `account_opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `account_opportunities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `accounts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `accounts`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `activities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `activities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `addresses`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `addresses`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `avatars`[0m
+  [1m[35mSQL (125.0ms)[0m  SHOW KEYS FROM `avatars`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `campaigns`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `campaigns`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `comments`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `comments`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `contact_opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contact_opportunities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `contacts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contacts`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `emails`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `emails`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `leads`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `leads`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `opportunities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `permissions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `permissions`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `preferences`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `preferences`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `sessions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `sessions`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `settings`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `settings`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `taggings`[0m
+  [1m[35mSQL (93.8ms)[0m  SHOW KEYS FROM `taggings`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `tags`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tags`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `tasks`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tasks`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `users`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (203.1ms)[0m  [1mTRUNCATE settings[0m
+  [1m[35mSQL (156.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('base_url', 'BAhJIgAGOgZFVA==\n', '2011-09-22 09:50:08', '2011-09-22 09:50:08')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('locale', 'BAhJIgplbi1VUwY6BkVU\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('per_user_locale', 'BAhG\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('user_signup', 'BAg6EG5vdF9hbGxvd2Vk\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('default_access', 'BAhJIgtQdWJsaWMGOgZFVA==\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('background_info', 'BAhbAA==\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('compound_address', 'BAhU\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_calendar_with_time', 'BAhU\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('email_dropbox', 'BAh7DToLc2VydmVySSISQElNQVBfU0VSVkVSQAY6BkVUOglwb3J0SSIQQElN\nQVBfUE9SVEAGOwZUOghzc2xJIg9ASU1BUF9TU0xABjsGVDoMYWRkcmVzc0ki\nE0BJTUFQX0FERFJFU1NABjsGVDoJdXNlckkiEEBJTUFQX1VTRVJABjsGVDoN\ncGFzc3dvcmRJIhRASU1BUF9QQVNTV09SREAGOwZUOhBzY2FuX2ZvbGRlckki\nEUBJTUFQX0lOQk9YQAY7BlQ6FmF0dGFjaF90b19hY2NvdW50SSISQElNQVBf\nQVRUQUNIQAY7BlQ=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (62.5ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('tabs', 'BAhbDHsIOgthY3RpdmVUOgl0ZXh0OhJ0YWJfZGFzaGJvYXJkOgh1cmx7BjoP\nY29udHJvbGxlckkiCWhvbWUGOgZFVHsIOwBGOwY6DnRhYl90YXNrczsIewY7\nCUkiCnRhc2tzBjsKVHsIOwBGOwY6EnRhYl9jYW1wYWlnbnM7CHsGOwlJIg5j\nYW1wYWlnbnMGOwpUewg7AEY7BjoOdGFiX2xlYWRzOwh7BjsJSSIKbGVhZHMG\nOwpUewg7AEY7BjoRdGFiX2FjY291bnRzOwh7BjsJSSINYWNjb3VudHMGOwpU\newg7AEY7BjoRdGFiX2NvbnRhY3RzOwh7BjsJSSINY29udGFjdHMGOwpUewg7\nAEY7BjoWdGFiX29wcG9ydHVuaXRpZXM7CHsGOwlJIhJvcHBvcnR1bml0aWVz\nBjsKVA==\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (15.6ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('admin_tabs', 'BAhbCHsIOgthY3RpdmVUOgl0ZXh0OhRhZG1pbl90YWJfdXNlcnM6CHVybHsG\nOg9jb250cm9sbGVySSIQYWRtaW4vdXNlcnMGOgZFVHsIOwBGOwY6F2FkbWlu\nX3RhYl9zZXR0aW5nczsIewY7CUkiE2FkbWluL3NldHRpbmdzBjsKVHsIOwBG\nOwY6FmFkbWluX3RhYl9wbHVnaW5zOwh7BjsJSSISYWRtaW4vcGx1Z2lucwY7\nClQ=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('account_category', 'BAhbCzoOYWZmaWxpYXRlOg9jb21wZXRpdG9yOg1jdXN0b21lcjoMcGFydG5l\ncjoNcmVzZWxsZXI6C3ZlbmRvcg==\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('account_category_color', 'BAh7CzoOYWZmaWxpYXRlSSINbGF2ZW5kZXIGOgZFVDoPY29tcGV0aXRvckki\nEnBhbGV0dXJxdW9pc2UGOwZUOg1jdXN0b21lckkiCXBpbmsGOwZUOgxwYXJ0\nbmVySSILYmlzcXVlBjsGVDoNcmVzZWxsZXJJIgx0aGlzdGxlBjsGVDoLdmVu\nZG9ySSIMc2t5Ymx1ZQY7BlQ=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('campaign_status', 'BAhbCjoMcGxhbm5lZDoMc3RhcnRlZDoOY29tcGxldGVkOgxvbl9ob2xkOg9j\nYWxsZWRfb2Zm\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('campaign_status_color', 'BAh7CjoMcGxhbm5lZEkiCUdvbGQGOgZFVDoMc3RhcnRlZEkiDlR1cnF1b2lz\nZQY7BlQ6DmNvbXBsZXRlZEkiCUxpbWUGOwZUOgxvbl9ob2xkSSILT3JjaGlk\nBjsGVDoPY2FsbGVkX29mZkkiDk9yYW5nZVJlZAY7BlQ=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (15.6ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_status', 'BAhbCToIbmV3Og5jb250YWN0ZWQ6DmNvbnZlcnRlZDoNcmVqZWN0ZWQ=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_status_color', 'BAh7CToIbmV3SSILU2lsdmVyBjoGRVQ6DmNvbnRhY3RlZEkiDlR1cnF1b2lz\nZQY7BlQ6DmNvbnZlcnRlZEkiCUxpbWUGOwZUOg1yZWplY3RlZEkiDk9yYW5n\nZVJlZAY7BlQ=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (109.4ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_source', 'BAhbDjoNY2FtcGFpZ246DmNvbGRfY2FsbDoPY29uZmVyZW5jZToLb25saW5l\nOg1yZWZlcnJhbDoJc2VsZjoId2ViOhJ3b3JkX29mX21vdXRoOgpvdGhlcg==\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (78.1ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('opportunity_stage', 'BAhbDToQcHJvc3BlY3Rpbmc6DWFuYWx5c2lzOhFwcmVzZW50YXRpb246DXBy\nb3Bvc2FsOhBuZWdvdGlhdGlvbjoRZmluYWxfcmV2aWV3Ogh3b246CWxvc3Q=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (62.5ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('opportunity_stage_color', 'BAh7DToQcHJvc3BlY3RpbmdJIgtTaWx2ZXIGOgZFVDoNYW5hbHlzaXNJIhJQ\nYWxlR29sZGVuUm9kBjsGVDoRcHJlc2VudGF0aW9uSSILU2FsbW9uBjsGVDoN\ncHJvcG9zYWxJIglHb2xkBjsGVDoQbmVnb3RpYXRpb25JIgtPcmNoaWQGOwZU\nOhFmaW5hbF9yZXZpZXdJIg5UdXJxdW9pc2UGOwZUOgh3b25JIglMaW1lBjsG\nVDoJbG9zdEkiDk9yYW5nZVJlZAY7BlQ=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (109.4ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_category', 'BAhbDToJY2FsbDoKZW1haWw6DmZvbGxvd191cDoKbHVuY2g6DG1lZXRpbmc6\nCm1vbmV5OhFwcmVzZW50YXRpb246CXRyaXA=\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_category_color', 'BAh7DToJY2FsbEkiC1NpbHZlcgY6BkVUOgplbWFpbEkiDlR1cnF1b2lzZQY7\nBlQ6DmZvbGxvd191cEkiCUdvbGQGOwZUOgpsdW5jaEkiC1RvbWF0bwY7BlQ6\nDG1lZXRpbmdJIgtPcmNoaWQGOwZUOgptb25leUkiCUxpbWUGOwZUOhFwcmVz\nZW50YXRpb25JIgtTYWxtb24GOwZUOgl0cmlwSSIOVHVycXVvaXNlBjsGVA==\n', '2011-09-22 09:50:09', '2011-09-22 09:50:09')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_bucket', 'BAhbDDoMb3ZlcmR1ZToNZHVlX2FzYXA6DmR1ZV90b2RheToRZHVlX3RvbW9y\ncm93OhJkdWVfdGhpc193ZWVrOhJkdWVfbmV4dF93ZWVrOg5kdWVfbGF0ZXI=\n', '2011-09-22 09:50:10', '2011-09-22 09:50:10')
+  [1m[36mSQL (62.5ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_completed', 'BAhbCjoUY29tcGxldGVkX3RvZGF5Ohhjb21wbGV0ZWRfeWVzdGVyZGF5Ohhj\nb21wbGV0ZWRfbGFzdF93ZWVrOhljb21wbGV0ZWRfdGhpc19tb250aDoZY29t\ncGxldGVkX2xhc3RfbW9udGg=\n', '2011-09-22 09:50:10', '2011-09-22 09:50:10')[0m
+  [1m[35mSQL (46.9ms)[0m  ALTER TABLE `leads` CHANGE `access` `access` varchar(8) DEFAULT 'Public'
+  [1m[36mSQL (62.5ms)[0m  [1mALTER TABLE `opportunities` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (62.5ms)[0m  ALTER TABLE `contacts` CHANGE `access` `access` varchar(8) DEFAULT 'Public'
+  [1m[36mSQL (62.5ms)[0m  [1mALTER TABLE `campaigns` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (62.5ms)[0m  ALTER TABLE `accounts` CHANGE `access` `access` varchar(8) DEFAULT 'Public'
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `account_contacts`[0m
+  [1m[35mSQL (15.6ms)[0m  SHOW KEYS FROM `account_contacts`
+  [1m[36mSQL (31.2ms)[0m  [1mdescribe `account_opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `account_opportunities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `accounts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `accounts`
+  [1m[36mSQL (31.2ms)[0m  [1mdescribe `activities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `activities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `addresses`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `addresses`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `avatars`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `avatars`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `campaigns`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `campaigns`
+  [1m[36mSQL (31.2ms)[0m  [1mdescribe `comments`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `comments`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `contact_opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contact_opportunities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `contacts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contacts`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `emails`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `emails`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `leads`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `leads`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `opportunities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `permissions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `permissions`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `preferences`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `preferences`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `sessions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `sessions`
+  [1m[36mSQL (31.2ms)[0m  [1mdescribe `settings`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `settings`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `taggings`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `taggings`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `tags`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tags`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `tasks`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tasks`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `users`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mUser Load (15.6ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`username` = 'admin' LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (31.2ms)[0m  SELECT 1 FROM `users` WHERE (`users`.`email` = BINARY 'asdf') LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM `users` WHERE (`users`.`username` = BINARY 'admin') LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT 1 FROM `users` WHERE (`users`.`persistence_token` = BINARY 'ae842d5fe3583a0911593a771f59eee2072b4b40de7a47e2ddae0c410a54015d52598de004a084bd95a354e0f6e056ced8aafe5dce065f9dab25b2923448a1c6') LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mROLLBACK[0m
+  [1m[35mSQL (0.0ms)[0m  BEGIN
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'user_signup' LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `users`[0m
+  [1m[35mAREL (0.0ms)[0m  INSERT INTO `users` (`username`, `email`, `first_name`, `last_name`, `title`, `company`, `alt_email`, `phone`, `mobile`, `aim`, `yahoo`, `google`, `skype`, `password_hash`, `password_salt`, `persistence_token`, `perishable_token`, `last_request_at`, `last_login_at`, `current_login_at`, `last_login_ip`, `current_login_ip`, `login_count`, `deleted_at`, `created_at`, `updated_at`, `admin`, `suspended_at`, `single_access_token`) VALUES ('admin', 'asdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '926f96b591c289c6659cfec9a348d886aeea60476f164e10e7611a961503a3b30f5e910b63480791602e9aff76b28625f7f695e4db647d78abe687b1e1ef4e77', '0Sce6gF3hmb9z1FIwq-U', 'ae842d5fe3583a0911593a771f59eee2072b4b40de7a47e2ddae0c410a54015d52598de004a084bd95a354e0f6e056ced8aafe5dce065f9dab25b2923448a1c6', 'KdPTt6lCgb9w1Pp5kvyo', NULL, NULL, NULL, NULL, NULL, 0, NULL, '2011-09-22 09:52:41', '2011-09-22 09:52:41', 1, NULL, NULL)
+  [1m[36mSQL (46.9ms)[0m  [1mCOMMIT[0m
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+Creating scope :except. Overwriting existing method User.except.
+
+
+Started GET "/" for 127.0.0.1 at 2011-09-22 17:53:38 +0800
+  Processing by HomeController#index as HTML
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+Redirected to http://localhost:3000/login
+Completed 302 Found in 31ms
+
+
+Started GET "/login" for 127.0.0.1 at 2011-09-22 17:53:39 +0800
+  Processing by AuthenticationsController#new as HTML
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'user_signup' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'user_signup' LIMIT 1[0m
+Rendered layouts/_header.html.haml (15.6ms)
+Rendered layouts/_about.html.haml (15.6ms)
+Rendered layouts/_footer.html.haml (46.9ms)
+Rendered layouts/_tabless.html.haml (46.9ms)
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1
+Rendered authentications/new.html.haml within layouts/application (140.6ms)
+Completed 200 OK in 391ms (Views: 375.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/timezone" for 127.0.0.1 at 2011-09-22 17:53:40 +0800
+  Processing by HomeController#timezone as JS
+  Parameters: {"offset"=>"-480", "_"=>""}
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1
+Rendered text template (0.0ms)
+Completed 200 OK in 9891ms (Views: 62.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/authentication" for 127.0.0.1 at 2011-09-22 17:53:50 +0800
+  Processing by AuthenticationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authentication"=>{"username"=>"admin", "password"=>"[FILTERED]", "remember_me"=>"0"}}
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`username` = 'admin' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  BEGIN
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE `users` SET `login_count` = 1, `current_login_at` = '2011-09-22 09:53:50', `current_login_ip` = '127.0.0.1', `last_request_at` = '2011-09-22 09:53:50', `perishable_token` = 'ujHf6auL5lblrPZG7sgk', `updated_at` = '2011-09-22 09:53:50' WHERE `users`.`id` = 1[0m
+  [1m[35mSQL (93.8ms)[0m  COMMIT
+Redirected to http://localhost:3000/
+Completed 302 Found in 109ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-09-22 17:53:50 +0800
+  Processing by HomeController#index as HTML
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mBEGIN[0m
+  [1m[35mAREL (0.0ms)[0m  UPDATE `users` SET `last_request_at` = '2011-09-22 09:53:50', `perishable_token` = 'b47MxjymRYX9tFXS6vln', `updated_at` = '2011-09-22 09:53:50' WHERE `users`.`id` = 1
+  [1m[36mSQL (250.0ms)[0m  [1mCOMMIT[0m
+  [1m[35mPreference Load (15.6ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'locale' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mBEGIN[0m
+  [1m[35mAREL (0.0ms)[0m  UPDATE `users` SET `single_access_token` = 'TOrRHvp2RLPWak1-sZV0', `perishable_token` = 'FQyMjLmyAPrGUjSCYYis', `updated_at` = '2011-09-22 09:53:50' WHERE `users`.`id` = 1
+  [1m[36mSQL (109.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_asset' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_action_type' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_user' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_duration' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mActivity Load (15.6ms)[0m  SELECT `activities`.* FROM `activities` WHERE (activities.created_at >= '2011-09-20 09:53:50') AND (action NOT IN ('viewed')) ORDER BY activities.created_at DESC
+Rendered common/_export.html.haml (0.0ms)
+Rendered layouts/_jumpbox.html.haml (15.6ms)
+Rendered layouts/_header.html.haml (46.9ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'tabs' LIMIT 1[0m
+  [1m[35mSQL (140.6ms)[0m  SELECT COUNT(*) FROM `activities` WHERE `activities`.`user_id` = 1 AND `activities`.`action` = 'viewed' LIMIT 10
+Rendered common/_recently.html.haml (156.2ms)
+Rendered layouts/_sidebar.html.haml (203.1ms)
+Rendered layouts/_tabbed.html.haml (218.8ms)
+Rendered layouts/_about.html.haml (0.0ms)
+Rendered layouts/_footer.html.haml (15.6ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1[0m
+Rendered home/index.html.haml within layouts/application (421.9ms)
+Completed 200 OK in 1062ms (Views: 375.0ms | ActiveRecord: 625.0ms)
+
+
+Started POST "/timezone" for 127.0.0.1 at 2011-09-22 17:53:51 +0800
+  Processing by HomeController#timezone as JS
+  Parameters: {"offset"=>"-480", "_"=>""}
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+Rendered text template (0.0ms)
+Completed 200 OK in 0ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+  [1m[36mSQL (15.6ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (46.9ms)[0m  TRUNCATE settings
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('base_url', 'BAhJIgAGOgZFVA==\n', '2011-09-22 10:30:01', '2011-09-22 10:30:01')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('locale', 'BAhJIgplbi1VUwY6BkVU\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('per_user_locale', 'BAhG\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('user_signup', 'BAg6EG5vdF9hbGxvd2Vk\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('default_access', 'BAhJIgtQdWJsaWMGOgZFVA==\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('background_info', 'BAhbAA==\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('compound_address', 'BAhU\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_calendar_with_time', 'BAhU\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('email_dropbox', 'BAh7DToLc2VydmVySSISQElNQVBfU0VSVkVSQAY6BkVUOglwb3J0SSIQQElN\nQVBfUE9SVEAGOwZUOghzc2xJIg9ASU1BUF9TU0xABjsGVDoMYWRkcmVzc0ki\nE0BJTUFQX0FERFJFU1NABjsGVDoJdXNlckkiEEBJTUFQX1VTRVJABjsGVDoN\ncGFzc3dvcmRJIhRASU1BUF9QQVNTV09SREAGOwZUOhBzY2FuX2ZvbGRlckki\nEUBJTUFQX0lOQk9YQAY7BlQ6FmF0dGFjaF90b19hY2NvdW50SSISQElNQVBf\nQVRUQUNIQAY7BlQ=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('tabs', 'BAhbDHsIOgthY3RpdmVUOgl0ZXh0OhJ0YWJfZGFzaGJvYXJkOgh1cmx7BjoP\nY29udHJvbGxlckkiCWhvbWUGOgZFVHsIOwBGOwY6DnRhYl90YXNrczsIewY7\nCUkiCnRhc2tzBjsKVHsIOwBGOwY6EnRhYl9jYW1wYWlnbnM7CHsGOwlJIg5j\nYW1wYWlnbnMGOwpUewg7AEY7BjoOdGFiX2xlYWRzOwh7BjsJSSIKbGVhZHMG\nOwpUewg7AEY7BjoRdGFiX2FjY291bnRzOwh7BjsJSSINYWNjb3VudHMGOwpU\newg7AEY7BjoRdGFiX2NvbnRhY3RzOwh7BjsJSSINY29udGFjdHMGOwpUewg7\nAEY7BjoWdGFiX29wcG9ydHVuaXRpZXM7CHsGOwlJIhJvcHBvcnR1bml0aWVz\nBjsKVA==\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('admin_tabs', 'BAhbCHsIOgthY3RpdmVUOgl0ZXh0OhRhZG1pbl90YWJfdXNlcnM6CHVybHsG\nOg9jb250cm9sbGVySSIQYWRtaW4vdXNlcnMGOgZFVHsIOwBGOwY6F2FkbWlu\nX3RhYl9zZXR0aW5nczsIewY7CUkiE2FkbWluL3NldHRpbmdzBjsKVHsIOwBG\nOwY6FmFkbWluX3RhYl9wbHVnaW5zOwh7BjsJSSISYWRtaW4vcGx1Z2lucwY7\nClQ=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('account_category', 'BAhbCzoOYWZmaWxpYXRlOg9jb21wZXRpdG9yOg1jdXN0b21lcjoMcGFydG5l\ncjoNcmVzZWxsZXI6C3ZlbmRvcg==\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (15.6ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('account_category_color', 'BAh7CzoOYWZmaWxpYXRlSSINbGF2ZW5kZXIGOgZFVDoPY29tcGV0aXRvckki\nEnBhbGV0dXJxdW9pc2UGOwZUOg1jdXN0b21lckkiCXBpbmsGOwZUOgxwYXJ0\nbmVySSILYmlzcXVlBjsGVDoNcmVzZWxsZXJJIgx0aGlzdGxlBjsGVDoLdmVu\nZG9ySSIMc2t5Ymx1ZQY7BlQ=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('campaign_status', 'BAhbCjoMcGxhbm5lZDoMc3RhcnRlZDoOY29tcGxldGVkOgxvbl9ob2xkOg9j\nYWxsZWRfb2Zm\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('campaign_status_color', 'BAh7CjoMcGxhbm5lZEkiCUdvbGQGOgZFVDoMc3RhcnRlZEkiDlR1cnF1b2lz\nZQY7BlQ6DmNvbXBsZXRlZEkiCUxpbWUGOwZUOgxvbl9ob2xkSSILT3JjaGlk\nBjsGVDoPY2FsbGVkX29mZkkiDk9yYW5nZVJlZAY7BlQ=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_status', 'BAhbCToIbmV3Og5jb250YWN0ZWQ6DmNvbnZlcnRlZDoNcmVqZWN0ZWQ=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_status_color', 'BAh7CToIbmV3SSILU2lsdmVyBjoGRVQ6DmNvbnRhY3RlZEkiDlR1cnF1b2lz\nZQY7BlQ6DmNvbnZlcnRlZEkiCUxpbWUGOwZUOg1yZWplY3RlZEkiDk9yYW5n\nZVJlZAY7BlQ=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_source', 'BAhbDjoNY2FtcGFpZ246DmNvbGRfY2FsbDoPY29uZmVyZW5jZToLb25saW5l\nOg1yZWZlcnJhbDoJc2VsZjoId2ViOhJ3b3JkX29mX21vdXRoOgpvdGhlcg==\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('opportunity_stage', 'BAhbDToQcHJvc3BlY3Rpbmc6DWFuYWx5c2lzOhFwcmVzZW50YXRpb246DXBy\nb3Bvc2FsOhBuZWdvdGlhdGlvbjoRZmluYWxfcmV2aWV3Ogh3b246CWxvc3Q=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('opportunity_stage_color', 'BAh7DToQcHJvc3BlY3RpbmdJIgtTaWx2ZXIGOgZFVDoNYW5hbHlzaXNJIhJQ\nYWxlR29sZGVuUm9kBjsGVDoRcHJlc2VudGF0aW9uSSILU2FsbW9uBjsGVDoN\ncHJvcG9zYWxJIglHb2xkBjsGVDoQbmVnb3RpYXRpb25JIgtPcmNoaWQGOwZU\nOhFmaW5hbF9yZXZpZXdJIg5UdXJxdW9pc2UGOwZUOgh3b25JIglMaW1lBjsG\nVDoJbG9zdEkiDk9yYW5nZVJlZAY7BlQ=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (15.6ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_category', 'BAhbDToJY2FsbDoKZW1haWw6DmZvbGxvd191cDoKbHVuY2g6DG1lZXRpbmc6\nCm1vbmV5OhFwcmVzZW50YXRpb246CXRyaXA=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_category_color', 'BAh7DToJY2FsbEkiC1NpbHZlcgY6BkVUOgplbWFpbEkiDlR1cnF1b2lzZQY7\nBlQ6DmZvbGxvd191cEkiCUdvbGQGOwZUOgpsdW5jaEkiC1RvbWF0bwY7BlQ6\nDG1lZXRpbmdJIgtPcmNoaWQGOwZUOgptb25leUkiCUxpbWUGOwZUOhFwcmVz\nZW50YXRpb25JIgtTYWxtb24GOwZUOgl0cmlwSSIOVHVycXVvaXNlBjsGVA==\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_bucket', 'BAhbDDoMb3ZlcmR1ZToNZHVlX2FzYXA6DmR1ZV90b2RheToRZHVlX3RvbW9y\ncm93OhJkdWVfdGhpc193ZWVrOhJkdWVfbmV4dF93ZWVrOg5kdWVfbGF0ZXI=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_completed', 'BAhbCjoUY29tcGxldGVkX3RvZGF5Ohhjb21wbGV0ZWRfeWVzdGVyZGF5Ohhj\nb21wbGV0ZWRfbGFzdF93ZWVrOhljb21wbGV0ZWRfdGhpc19tb250aDoZY29t\ncGxldGVkX2xhc3RfbW9udGg=\n', '2011-09-22 10:30:02', '2011-09-22 10:30:02')
+  [1m[36mSQL (31.2ms)[0m  [1mALTER TABLE `leads` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (62.5ms)[0m  ALTER TABLE `opportunities` CHANGE `access` `access` varchar(8) DEFAULT 'Public'
+  [1m[36mSQL (109.4ms)[0m  [1mALTER TABLE `contacts` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (46.9ms)[0m  ALTER TABLE `campaigns` CHANGE `access` `access` varchar(8) DEFAULT 'Public'
+  [1m[36mSQL (31.2ms)[0m  [1mALTER TABLE `accounts` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `account_contacts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `account_contacts`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `account_opportunities`[0m
+  [1m[35mSQL (15.6ms)[0m  SHOW KEYS FROM `account_opportunities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `accounts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `accounts`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `activities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `activities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `addresses`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `addresses`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `avatars`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `avatars`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `campaigns`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `campaigns`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `comments`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `comments`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `contact_opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contact_opportunities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `contacts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contacts`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `emails`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `emails`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `leads`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `leads`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `opportunities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `permissions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `permissions`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `preferences`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `preferences`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `sessions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `sessions`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `settings`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `settings`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `taggings`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `taggings`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `tags`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tags`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `tasks`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tasks`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `users`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+Creating scope :except. Overwriting existing method User.except.
+
+
+Started GET "/" for 127.0.0.1 at 2011-09-22 18:34:13 +0800
+  Processing by HomeController#index as HTML
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  BEGIN
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE `users` SET `last_request_at` = '2011-09-22 10:34:16', `perishable_token` = 'iDiF_0wh8endvUzL_ots', `updated_at` = '2011-09-22 10:34:16' WHERE `users`.`id` = 1[0m
+  [1m[35mSQL (46.9ms)[0m  COMMIT
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'locale' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_asset' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_action_type' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_user' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_duration' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mActivity Load (0.0ms)[0m  SELECT `activities`.* FROM `activities` WHERE (activities.created_at >= '2011-09-20 10:34:16') AND (action NOT IN ('viewed')) ORDER BY activities.created_at DESC
+Rendered common/_export.html.haml (0.0ms)
+Rendered layouts/_jumpbox.html.haml (15.6ms)
+Rendered layouts/_header.html.haml (31.2ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'tabs' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(*) FROM `activities` WHERE `activities`.`user_id` = 1 AND `activities`.`action` = 'viewed' LIMIT 10
+Rendered common/_recently.html.haml (15.6ms)
+Rendered layouts/_sidebar.html.haml (46.9ms)
+Rendered layouts/_tabbed.html.haml (62.5ms)
+Rendered layouts/_about.html.haml (0.0ms)
+Rendered layouts/_footer.html.haml (46.9ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1[0m
+Rendered home/index.html.haml within layouts/application (187.5ms)
+Completed 200 OK in 3016ms (Views: 203.1ms | ActiveRecord: 46.9ms)
+  [1m[36mSQL (281.2ms)[0m  [1mSHOW TABLES[0m
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (78.1ms)[0m  TRUNCATE settings
+  [1m[36mSQL (62.5ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('base_url', 'BAhJIgAGOgZFVA==\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (109.4ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('locale', 'BAhJIgplbi1VUwY6BkVU\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('per_user_locale', 'BAhG\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (125.0ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('user_signup', 'BAg6EG5vdF9hbGxvd2Vk\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (78.1ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('default_access', 'BAhJIgtQdWJsaWMGOgZFVA==\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('background_info', 'BAhbAA==\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('compound_address', 'BAhU\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_calendar_with_time', 'BAhU\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('email_dropbox', 'BAh7DToLc2VydmVySSISQElNQVBfU0VSVkVSQAY6BkVUOglwb3J0SSIQQElN\nQVBfUE9SVEAGOwZUOghzc2xJIg9ASU1BUF9TU0xABjsGVDoMYWRkcmVzc0ki\nE0BJTUFQX0FERFJFU1NABjsGVDoJdXNlckkiEEBJTUFQX1VTRVJABjsGVDoN\ncGFzc3dvcmRJIhRASU1BUF9QQVNTV09SREAGOwZUOhBzY2FuX2ZvbGRlckki\nEUBJTUFQX0lOQk9YQAY7BlQ6FmF0dGFjaF90b19hY2NvdW50SSISQElNQVBf\nQVRUQUNIQAY7BlQ=\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (46.9ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('tabs', 'BAhbDHsIOgthY3RpdmVUOgl0ZXh0OhJ0YWJfZGFzaGJvYXJkOgh1cmx7BjoP\nY29udHJvbGxlckkiCWhvbWUGOgZFVHsIOwBGOwY6DnRhYl90YXNrczsIewY7\nCUkiCnRhc2tzBjsKVHsIOwBGOwY6EnRhYl9jYW1wYWlnbnM7CHsGOwlJIg5j\nYW1wYWlnbnMGOwpUewg7AEY7BjoOdGFiX2xlYWRzOwh7BjsJSSIKbGVhZHMG\nOwpUewg7AEY7BjoRdGFiX2FjY291bnRzOwh7BjsJSSINYWNjb3VudHMGOwpU\newg7AEY7BjoRdGFiX2NvbnRhY3RzOwh7BjsJSSINY29udGFjdHMGOwpUewg7\nAEY7BjoWdGFiX29wcG9ydHVuaXRpZXM7CHsGOwlJIhJvcHBvcnR1bml0aWVz\nBjsKVA==\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('admin_tabs', 'BAhbCHsIOgthY3RpdmVUOgl0ZXh0OhRhZG1pbl90YWJfdXNlcnM6CHVybHsG\nOg9jb250cm9sbGVySSIQYWRtaW4vdXNlcnMGOgZFVHsIOwBGOwY6F2FkbWlu\nX3RhYl9zZXR0aW5nczsIewY7CUkiE2FkbWluL3NldHRpbmdzBjsKVHsIOwBG\nOwY6FmFkbWluX3RhYl9wbHVnaW5zOwh7BjsJSSISYWRtaW4vcGx1Z2lucwY7\nClQ=\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('account_category', 'BAhbCzoOYWZmaWxpYXRlOg9jb21wZXRpdG9yOg1jdXN0b21lcjoMcGFydG5l\ncjoNcmVzZWxsZXI6C3ZlbmRvcg==\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('account_category_color', 'BAh7CzoOYWZmaWxpYXRlSSINbGF2ZW5kZXIGOgZFVDoPY29tcGV0aXRvckki\nEnBhbGV0dXJxdW9pc2UGOwZUOg1jdXN0b21lckkiCXBpbmsGOwZUOgxwYXJ0\nbmVySSILYmlzcXVlBjsGVDoNcmVzZWxsZXJJIgx0aGlzdGxlBjsGVDoLdmVu\nZG9ySSIMc2t5Ymx1ZQY7BlQ=\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('campaign_status', 'BAhbCjoMcGxhbm5lZDoMc3RhcnRlZDoOY29tcGxldGVkOgxvbl9ob2xkOg9j\nYWxsZWRfb2Zm\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (31.2ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('campaign_status_color', 'BAh7CjoMcGxhbm5lZEkiCUdvbGQGOgZFVDoMc3RhcnRlZEkiDlR1cnF1b2lz\nZQY7BlQ6DmNvbXBsZXRlZEkiCUxpbWUGOwZUOgxvbl9ob2xkSSILT3JjaGlk\nBjsGVDoPY2FsbGVkX29mZkkiDk9yYW5nZVJlZAY7BlQ=\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')[0m
+  [1m[35mSQL (78.1ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_status', 'BAhbCToIbmV3Og5jb250YWN0ZWQ6DmNvbnZlcnRlZDoNcmVqZWN0ZWQ=\n', '2011-09-22 11:05:13', '2011-09-22 11:05:13')
+  [1m[36mSQL (62.5ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_status_color', 'BAh7CToIbmV3SSILU2lsdmVyBjoGRVQ6DmNvbnRhY3RlZEkiDlR1cnF1b2lz\nZQY7BlQ6DmNvbnZlcnRlZEkiCUxpbWUGOwZUOg1yZWplY3RlZEkiDk9yYW5n\nZVJlZAY7BlQ=\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')[0m
+  [1m[35mSQL (15.6ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('lead_source', 'BAhbDjoNY2FtcGFpZ246DmNvbGRfY2FsbDoPY29uZmVyZW5jZToLb25saW5l\nOg1yZWZlcnJhbDoJc2VsZjoId2ViOhJ3b3JkX29mX21vdXRoOgpvdGhlcg==\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('opportunity_stage', 'BAhbDToQcHJvc3BlY3Rpbmc6DWFuYWx5c2lzOhFwcmVzZW50YXRpb246DXBy\nb3Bvc2FsOhBuZWdvdGlhdGlvbjoRZmluYWxfcmV2aWV3Ogh3b246CWxvc3Q=\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('opportunity_stage_color', 'BAh7DToQcHJvc3BlY3RpbmdJIgtTaWx2ZXIGOgZFVDoNYW5hbHlzaXNJIhJQ\nYWxlR29sZGVuUm9kBjsGVDoRcHJlc2VudGF0aW9uSSILU2FsbW9uBjsGVDoN\ncHJvcG9zYWxJIglHb2xkBjsGVDoQbmVnb3RpYXRpb25JIgtPcmNoaWQGOwZU\nOhFmaW5hbF9yZXZpZXdJIg5UdXJxdW9pc2UGOwZUOgh3b25JIglMaW1lBjsG\nVDoJbG9zdEkiDk9yYW5nZVJlZAY7BlQ=\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_category', 'BAhbDToJY2FsbDoKZW1haWw6DmZvbGxvd191cDoKbHVuY2g6DG1lZXRpbmc6\nCm1vbmV5OhFwcmVzZW50YXRpb246CXRyaXA=\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')[0m
+  [1m[35mSQL (15.6ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_category_color', 'BAh7DToJY2FsbEkiC1NpbHZlcgY6BkVUOgplbWFpbEkiDlR1cnF1b2lzZQY7\nBlQ6DmZvbGxvd191cEkiCUdvbGQGOwZUOgpsdW5jaEkiC1RvbWF0bwY7BlQ6\nDG1lZXRpbmdJIgtPcmNoaWQGOwZUOgptb25leUkiCUxpbWUGOwZUOhFwcmVz\nZW50YXRpb25JIgtTYWxtb24GOwZUOgl0cmlwSSIOVHVycXVvaXNlBjsGVA==\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')
+  [1m[36mSQL (46.9ms)[0m  [1mINSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_bucket', 'BAhbDDoMb3ZlcmR1ZToNZHVlX2FzYXA6DmR1ZV90b2RheToRZHVlX3RvbW9y\ncm93OhJkdWVfdGhpc193ZWVrOhJkdWVfbmV4dF93ZWVrOg5kdWVfbGF0ZXI=\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')[0m
+  [1m[35mSQL (31.2ms)[0m  INSERT INTO settings (name, default_value, created_at, updated_at) VALUES('task_completed', 'BAhbCjoUY29tcGxldGVkX3RvZGF5Ohhjb21wbGV0ZWRfeWVzdGVyZGF5Ohhj\nb21wbGV0ZWRfbGFzdF93ZWVrOhljb21wbGV0ZWRfdGhpc19tb250aDoZY29t\ncGxldGVkX2xhc3RfbW9udGg=\n', '2011-09-22 11:05:14', '2011-09-22 11:05:14')
+  [1m[36mSQL (62.5ms)[0m  [1mALTER TABLE `leads` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (31.2ms)[0m  ALTER TABLE `opportunities` CHANGE `access` `access` varchar(8) DEFAULT 'Public'
+  [1m[36mSQL (62.5ms)[0m  [1mALTER TABLE `contacts` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (62.5ms)[0m  ALTER TABLE `campaigns` CHANGE `access` `access` varchar(8) DEFAULT 'Public'
+  [1m[36mSQL (62.5ms)[0m  [1mALTER TABLE `accounts` CHANGE `access` `access` varchar(8) DEFAULT 'Public'[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+  [1m[35mSQL (15.6ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `account_contacts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `account_contacts`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `account_opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `account_opportunities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `accounts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `accounts`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `activities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `activities`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `addresses`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `addresses`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `avatars`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `avatars`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `campaigns`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `campaigns`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `comments`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `comments`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `contact_opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contact_opportunities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `contacts`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `contacts`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `emails`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `emails`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `leads`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `leads`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `opportunities`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `opportunities`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `permissions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `permissions`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `preferences`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `preferences`
+  [1m[36mSQL (15.6ms)[0m  [1mdescribe `sessions`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `sessions`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `settings`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `settings`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `taggings`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `taggings`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `tags`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tags`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `tasks`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `tasks`
+  [1m[36mSQL (0.0ms)[0m  [1mdescribe `users`[0m
+  [1m[35mSQL (0.0ms)[0m  SHOW KEYS FROM `users`
+  [1m[36mSQL (0.0ms)[0m  [1mSHOW TABLES[0m
+Creating scope :except. Overwriting existing method User.except.
+
+
+Started GET "/" for 127.0.0.1 at 2011-09-22 19:14:47 +0800
+  Processing by HomeController#index as HTML
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  BEGIN
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE `users` SET `last_request_at` = '2011-09-22 11:14:51', `perishable_token` = 'LIE61kOVo2RZjlPEJEdM', `updated_at` = '2011-09-22 11:14:51' WHERE `users`.`id` = 1[0m
+  [1m[35mSQL (46.9ms)[0m  COMMIT
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'locale' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_asset' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_action_type' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_user' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'activity_duration' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mActivity Load (0.0ms)[0m  SELECT `activities`.* FROM `activities` WHERE (activities.created_at >= '2011-09-20 11:14:51') AND (action NOT IN ('viewed')) ORDER BY activities.created_at DESC
+Rendered common/_export.html.haml (0.0ms)
+Rendered layouts/_jumpbox.html.haml (0.0ms)
+Rendered layouts/_header.html.haml (15.6ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'tabs' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(*) FROM `activities` WHERE `activities`.`user_id` = 1 AND `activities`.`action` = 'viewed' LIMIT 10
+Rendered common/_recently.html.haml (187.5ms)
+Rendered layouts/_sidebar.html.haml (218.8ms)
+Rendered layouts/_tabbed.html.haml (234.4ms)
+Rendered layouts/_about.html.haml (15.6ms)
+Rendered layouts/_footer.html.haml (15.6ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1[0m
+Rendered home/index.html.haml within layouts/application (343.8ms)
+Completed 200 OK in 4125ms (Views: 375.0ms | ActiveRecord: 46.9ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2011-09-22 19:15:11 +0800
+  Processing by TasksController#index as HTML
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  BEGIN
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE `users` SET `last_request_at` = '2011-09-22 11:15:11', `perishable_token` = 'FvQ44PmqM5T2koppvCyb', `updated_at` = '2011-09-22 11:15:11' WHERE `users`.`id` = 1[0m
+  [1m[35mSQL (15.6ms)[0m  COMMIT
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'locale' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mSetting Load (15.6ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'task_bucket' LIMIT 1
+  [1m[36mSQL (15.6ms)[0m  [1mSELECT COUNT(DISTINCT `tasks`.`id`) FROM `tasks` LEFT OUTER JOIN `users` ON `users`.`id` = `tasks`.`assigned_to` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at IS NOT NULL AND due_at < '2011-09-22 00:00:00') AND (completed_at IS NULL)[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `tasks`.`id`) FROM `tasks` LEFT OUTER JOIN `users` ON `users`.`id` = `tasks`.`assigned_to` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at IS NULL AND bucket = 'due_asap') AND (completed_at IS NULL)
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `tasks`.`id`) FROM `tasks` LEFT OUTER JOIN `users` ON `users`.`id` = `tasks`.`assigned_to` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-22 00:00:00' AND due_at < '2011-09-23 00:00:00') AND (completed_at IS NULL)[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `tasks`.`id`) FROM `tasks` LEFT OUTER JOIN `users` ON `users`.`id` = `tasks`.`assigned_to` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-23 00:00:00' AND due_at < '2011-09-24 00:00:00') AND (completed_at IS NULL)
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `tasks`.`id`) FROM `tasks` LEFT OUTER JOIN `users` ON `users`.`id` = `tasks`.`assigned_to` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-24 00:00:00' AND due_at < '2011-09-26 00:00:00') AND (completed_at IS NULL)[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `tasks`.`id`) FROM `tasks` LEFT OUTER JOIN `users` ON `users`.`id` = `tasks`.`assigned_to` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-26 00:00:00' AND due_at < '2011-10-03 23:59:59') AND (completed_at IS NULL)
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `tasks`.`id`) FROM `tasks` LEFT OUTER JOIN `users` ON `users`.`id` = `tasks`.`assigned_to` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND ((due_at IS NULL AND bucket = 'due_later') OR due_at >= '2011-10-03 23:59:59') AND (completed_at IS NULL)[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'task_bucket' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'task_category_color' LIMIT 1[0m
+Rendered common/_inline_styles.html.haml (15.6ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'task_bucket' LIMIT 1
+Rendered tasks/_title.html.haml (0.0ms)
+  [1m[36mTask Load (0.0ms)[0m  [1mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at IS NOT NULL AND due_at < '2011-09-22 00:00:00') AND (completed_at IS NULL) ORDER BY name ASC, tasks.id DESC, tasks.due_at, tasks.id[0m
+Rendered tasks/_pending.html.haml (0.0ms)
+  [1m[35mTask Load (0.0ms)[0m  SELECT `tasks`.* FROM `tasks` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at IS NULL AND bucket = 'due_asap') AND (completed_at IS NULL) ORDER BY name ASC, tasks.id DESC, tasks.due_at, tasks.id
+Rendered tasks/_pending.html.haml (0.0ms)
+  [1m[36mTask Load (0.0ms)[0m  [1mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-22 00:00:00' AND due_at < '2011-09-23 00:00:00') AND (completed_at IS NULL) ORDER BY name ASC, tasks.id DESC, tasks.due_at, tasks.id[0m
+Rendered tasks/_pending.html.haml (0.0ms)
+  [1m[35mTask Load (0.0ms)[0m  SELECT `tasks`.* FROM `tasks` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-23 00:00:00' AND due_at < '2011-09-24 00:00:00') AND (completed_at IS NULL) ORDER BY name ASC, tasks.id DESC, tasks.due_at, tasks.id
+Rendered tasks/_pending.html.haml (0.0ms)
+  [1m[36mTask Load (0.0ms)[0m  [1mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-24 00:00:00' AND due_at < '2011-09-26 00:00:00') AND (completed_at IS NULL) ORDER BY name ASC, tasks.id DESC, tasks.due_at, tasks.id[0m
+Rendered tasks/_pending.html.haml (0.0ms)
+  [1m[35mTask Load (0.0ms)[0m  SELECT `tasks`.* FROM `tasks` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND (due_at >= '2011-09-26 00:00:00' AND due_at < '2011-10-03 23:59:59') AND (completed_at IS NULL) ORDER BY name ASC, tasks.id DESC, tasks.due_at, tasks.id
+Rendered tasks/_pending.html.haml (0.0ms)
+  [1m[36mTask Load (0.0ms)[0m  [1mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`deleted_at` IS NULL AND ((user_id = 1 AND assigned_to IS NULL) OR assigned_to = 1) AND ((due_at IS NULL AND bucket = 'due_later') OR due_at >= '2011-10-03 23:59:59') AND (completed_at IS NULL) ORDER BY name ASC, tasks.id DESC, tasks.due_at, tasks.id[0m
+Rendered tasks/_pending.html.haml (0.0ms)
+Rendered tasks/_empty.html.haml (0.0ms)
+Rendered layouts/_jumpbox.html.haml (15.6ms)
+Rendered layouts/_header.html.haml (15.6ms)
+Rendered tasks/_selector.html.haml (46.9ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'task_bucket' LIMIT 1
+Rendered tasks/_sidebar_index.html.haml (62.5ms)
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(*) FROM `activities` WHERE `activities`.`user_id` = 1 AND `activities`.`action` = 'viewed' LIMIT 10[0m
+Rendered common/_recently.html.haml (0.0ms)
+Rendered layouts/_sidebar.html.haml (93.8ms)
+Rendered layouts/_tabbed.html.haml (109.4ms)
+Rendered layouts/_about.html.haml (15.6ms)
+Rendered layouts/_footer.html.haml (15.6ms)
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1
+Rendered tasks/index.html.haml within layouts/application (234.4ms)
+Completed 200 OK in 406ms (Views: 296.9ms | ActiveRecord: 46.9ms)
+
+
+Started GET "/campaigns" for 127.0.0.1 at 2011-09-22 19:15:13 +0800
+  Processing by CampaignsController#index as HTML
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mBEGIN[0m
+  [1m[35mAREL (0.0ms)[0m  UPDATE `users` SET `last_request_at` = '2011-09-22 11:15:13', `perishable_token` = 'bNVVcYbKusrvm7Q9qNiL', `updated_at` = '2011-09-22 11:15:13' WHERE `users`.`id` = 1
+  [1m[36mSQL (46.9ms)[0m  [1mCOMMIT[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'locale' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'campaign_status' LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND `campaigns`.`status` = 'planned' AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND `campaigns`.`status` = 'started' AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND `campaigns`.`status` = 'completed' AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND `campaigns`.`status` = 'on_hold' AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND `campaigns`.`status` = 'called_off' AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'campaigns_sort_by' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'campaigns_per_page' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'campaign_status_color' LIMIT 1
+Rendered common/_inline_styles.html.haml (0.0ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')[0m
+Rendered common/_empty.html.haml (0.0ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(DISTINCT `campaigns`.`id`) FROM `campaigns` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `campaigns`.`id` AND `permissions`.`asset_type` = 'Campaign' WHERE `campaigns`.`deleted_at` IS NULL AND (`campaigns`.user_id = 1 OR `campaigns`.assigned_to = 1 OR permissions.user_id = 1 OR `campaigns`.access = 'Public')
+Rendered common/_paginate.haml (0.0ms)
+Rendered common/_export.html.haml (0.0ms)
+Rendered layouts/_jumpbox.html.haml (15.6ms)
+Rendered layouts/_header.html.haml (15.6ms)
+Rendered common/_search.html.haml (0.0ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'campaign_status' LIMIT 1[0m
+Rendered campaigns/_sidebar_index.html.haml (31.2ms)
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(*) FROM `activities` WHERE `activities`.`user_id` = 1 AND `activities`.`action` = 'viewed' LIMIT 10
+Rendered common/_recently.html.haml (46.9ms)
+Rendered layouts/_sidebar.html.haml (109.4ms)
+Rendered layouts/_tabbed.html.haml (125.0ms)
+Rendered layouts/_about.html.haml (0.0ms)
+Rendered layouts/_footer.html.haml (15.6ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1[0m
+Rendered campaigns/index.html.haml within layouts/application (218.8ms)
+Completed 200 OK in 328ms (Views: 250.0ms | ActiveRecord: 46.9ms)
+
+
+Started GET "/leads" for 127.0.0.1 at 2011-09-22 19:15:14 +0800
+  Processing by LeadsController#index as HTML
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  BEGIN
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE `users` SET `last_request_at` = '2011-09-22 11:15:14', `perishable_token` = 'jDZMAAp4kbMkOPrMwFly', `updated_at` = '2011-09-22 11:15:14' WHERE `users`.`id` = 1[0m
+  [1m[35mSQL (31.2ms)[0m  COMMIT
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'locale' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `leads`.`id`) FROM `leads` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `leads`.`id` AND `permissions`.`asset_type` = 'Lead' WHERE `leads`.`deleted_at` IS NULL AND (`leads`.user_id = 1 OR `leads`.assigned_to = 1 OR permissions.user_id = 1 OR `leads`.access = 'Public')
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'lead_status' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `leads`.`id`) FROM `leads` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `leads`.`id` AND `permissions`.`asset_type` = 'Lead' WHERE `leads`.`deleted_at` IS NULL AND `leads`.`status` = 'new' AND (`leads`.user_id = 1 OR `leads`.assigned_to = 1 OR permissions.user_id = 1 OR `leads`.access = 'Public')
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `leads`.`id`) FROM `leads` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `leads`.`id` AND `permissions`.`asset_type` = 'Lead' WHERE `leads`.`deleted_at` IS NULL AND `leads`.`status` = 'contacted' AND (`leads`.user_id = 1 OR `leads`.assigned_to = 1 OR permissions.user_id = 1 OR `leads`.access = 'Public')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `leads`.`id`) FROM `leads` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `leads`.`id` AND `permissions`.`asset_type` = 'Lead' WHERE `leads`.`deleted_at` IS NULL AND `leads`.`status` = 'converted' AND (`leads`.user_id = 1 OR `leads`.assigned_to = 1 OR permissions.user_id = 1 OR `leads`.access = 'Public')
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `leads`.`id`) FROM `leads` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `leads`.`id` AND `permissions`.`asset_type` = 'Lead' WHERE `leads`.`deleted_at` IS NULL AND `leads`.`status` = 'rejected' AND (`leads`.user_id = 1 OR `leads`.assigned_to = 1 OR permissions.user_id = 1 OR `leads`.access = 'Public')[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'leads_sort_by' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'leads_per_page' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'lead_status_color' LIMIT 1
+Rendered common/_inline_styles.html.haml (0.0ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `leads`.`id`) FROM `leads` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `leads`.`id` AND `permissions`.`asset_type` = 'Lead' WHERE `leads`.`deleted_at` IS NULL AND (`leads`.user_id = 1 OR `leads`.assigned_to = 1 OR permissions.user_id = 1 OR `leads`.access = 'Public')[0m
+Rendered common/_empty.html.haml (0.0ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(DISTINCT `leads`.`id`) FROM `leads` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `leads`.`id` AND `permissions`.`asset_type` = 'Lead' WHERE `leads`.`deleted_at` IS NULL AND (`leads`.user_id = 1 OR `leads`.assigned_to = 1 OR permissions.user_id = 1 OR `leads`.access = 'Public')
+Rendered common/_paginate.haml (0.0ms)
+Rendered common/_export.html.haml (0.0ms)
+Rendered layouts/_jumpbox.html.haml (0.0ms)
+Rendered layouts/_header.html.haml (15.6ms)
+Rendered common/_search.html.haml (15.6ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'lead_status' LIMIT 1[0m
+Rendered leads/_sidebar_index.html.haml (15.6ms)
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(*) FROM `activities` WHERE `activities`.`user_id` = 1 AND `activities`.`action` = 'viewed' LIMIT 10
+Rendered common/_recently.html.haml (0.0ms)
+Rendered layouts/_sidebar.html.haml (46.9ms)
+Rendered layouts/_tabbed.html.haml (62.5ms)
+Rendered layouts/_about.html.haml (109.4ms)
+Rendered layouts/_footer.html.haml (140.6ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1[0m
+Rendered leads/index.html.haml within layouts/application (265.6ms)
+Completed 200 OK in 359ms (Views: 296.9ms | ActiveRecord: 31.2ms)
+
+
+Started GET "/accounts" for 127.0.0.1 at 2011-09-22 19:15:15 +0800
+  Processing by AccountsController#index as HTML
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'locale' LIMIT 1
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`deleted_at` IS NULL AND `users`.`id` = 1 LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  BEGIN
+  [1m[36mAREL (15.6ms)[0m  [1mUPDATE `users` SET `last_request_at` = '2011-09-22 11:15:15', `perishable_token` = 'YeiuoL-OTiiAiISjtNXs', `updated_at` = '2011-09-22 11:15:15' WHERE `users`.`id` = 1[0m
+  [1m[35mSQL (15.6ms)[0m  COMMIT
+  [1m[36mPreference Load (0.0ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'locale' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND `accounts`.`category` = 'affiliate' AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND `accounts`.`category` = 'competitor' AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND `accounts`.`category` = 'customer' AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND `accounts`.`category` = 'partner' AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND `accounts`.`category` = 'reseller' AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND `accounts`.`category` = 'vendor' AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')[0m
+  [1m[35mPreference Load (0.0ms)[0m  SELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'accounts_sort_by' AND `preferences`.`user_id` = 1 LIMIT 1
+  [1m[36mPreference Load (15.6ms)[0m  [1mSELECT `preferences`.* FROM `preferences` WHERE `preferences`.`name` = 'accounts_per_page' AND `preferences`.`user_id` = 1 LIMIT 1[0m
+  [1m[35mSetting Load (0.0ms)[0m  SELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category_color' LIMIT 1
+Rendered common/_inline_styles.html.haml (15.6ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')[0m
+Rendered common/_empty.html.haml (0.0ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(DISTINCT `accounts`.`id`) FROM `accounts` LEFT OUTER JOIN `permissions` ON `permissions`.`asset_id` = `accounts`.`id` AND `permissions`.`asset_type` = 'Account' WHERE `accounts`.`deleted_at` IS NULL AND (`accounts`.user_id = 1 OR `accounts`.assigned_to = 1 OR permissions.user_id = 1 OR `accounts`.access = 'Public')
+Rendered common/_paginate.haml (15.6ms)
+Rendered common/_export.html.haml (0.0ms)
+Rendered layouts/_jumpbox.html.haml (15.6ms)
+Rendered layouts/_header.html.haml (15.6ms)
+Rendered common/_search.html.haml (0.0ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'account_category' LIMIT 1[0m
+Rendered accounts/_sidebar_index.html.haml (0.0ms)
+  [1m[35mSQL (0.0ms)[0m  SELECT COUNT(*) FROM `activities` WHERE `activities`.`user_id` = 1 AND `activities`.`action` = 'viewed' LIMIT 10
+Rendered common/_recently.html.haml (0.0ms)
+Rendered layouts/_sidebar.html.haml (46.9ms)
+Rendered layouts/_tabbed.html.haml (46.9ms)
+Rendered layouts/_about.html.haml (0.0ms)
+Rendered layouts/_footer.html.haml (15.6ms)
+  [1m[36mSetting Load (0.0ms)[0m  [1mSELECT `settings`.* FROM `settings` WHERE `settings`.`name` = 'base_url' LIMIT 1[0m
+Rendered accounts/index.html.haml within layouts/application (125.0ms)
+Completed 200 OK in 234ms (Views: 156.2ms | ActiveRecord: 46.9ms)
